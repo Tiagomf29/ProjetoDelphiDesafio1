@@ -1,0 +1,25 @@
+unit UTveiculo;
+
+interface
+
+type
+
+TVeiculo = class
+
+private
+modelo : String;
+tipo   : Integer;
+cambio : String;
+cores  : String;
+
+protected
+
+
+public
+
+
+end;
+
+implementation
+
+end.
