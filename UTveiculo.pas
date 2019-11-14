@@ -2,7 +2,7 @@ unit UTveiculo;
 
 interface
 uses
-  UEnum,Vcl.Controls,Vcl.Dialogs;
+  UEnum,Vcl.Controls,Vcl.Dialogs,Vcl.StdCtrls;
 
 type
 
@@ -31,18 +31,56 @@ public
   property cambio : String read getCambio write setCambio;
   property cores  : String read getCores write setCores;
   constructor create(Amodelo : String; Atipo : TEnum; Acambio : String; ACores :String );
-
-
-
+  function acelerar(descricao : String): String;
+  function frear(descricao:String):String;
+  procedure estacionar(memo : TMemo);
 end;
 
 implementation
 
 { TVeiculo }
 
+function TVeiculo.acelerar(descricao: String): String;
+begin
+  result:=descricao;
+end;
+
 constructor TVeiculo.create(Amodelo : String; Atipo : TEnum; Acambio : String; ACores :String );
 begin
+  Fmodelo:=Amodelo;
+  Ftipo:=Atipo;
+  Fcambio:=Acambio;
+  Fcores:=ACores;
 
+  if Fmodelo = '' then
+  begin
+   MessageDlg('Carro não será criado. Modelo não preenchido.',mtInformation,[mbOK],0);
+   Exit;
+  end;
+
+  if Ftipo = TEnum(nil) then
+  begin
+   MessageDlg('Carro não será criado. Tipo não preenchido.',mtInformation,[mbOK],0);
+   Exit;
+  end;
+
+  if Fcambio = '' then
+  begin
+   MessageDlg('Carro não será criado. Cambio não preenchido.',mtInformation,[mbOK],0);
+   Exit;
+  end;
+
+
+end;
+
+procedure TVeiculo.estacionar(memo: TMemo);
+begin
+  memo.Lines.Add('Estacionar');
+end;
+
+function TVeiculo.frear(descricao: String): String;
+begin
+  Result:=descricao;
 end;
 
 function TVeiculo.getCambio: String;
