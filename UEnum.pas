@@ -4,7 +4,7 @@ interface
 
 type
 
-  TEnum =(Carro = 1, Moto = 2, Caminhão = 3);
+  TEnum =(Carro , Moto , Caminhão );
 
 
 implementation

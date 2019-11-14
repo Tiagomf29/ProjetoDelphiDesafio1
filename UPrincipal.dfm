@@ -1,8 +1,9 @@
 object Form1: TForm1
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Form1'
-  ClientHeight = 286
+  ClientHeight = 377
   ClientWidth = 601
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -11,6 +12,7 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesktopCenter
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -134,7 +136,7 @@ object Form1: TForm1
     Left = 304
     Top = 129
     Width = 296
-    Height = 147
+    Height = 240
     Lines.Strings = (
       '')
     TabOrder = 8

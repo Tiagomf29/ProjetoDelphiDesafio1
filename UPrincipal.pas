@@ -45,12 +45,33 @@ begin
 end;
 
 procedure TForm1.btCriarVeiculoClick(Sender: TObject);
+var
+contagem : Integer;
+cores : String;
 
 begin
 
+  if cbxTipo.ItemIndex =-1 then
+  begin
+    MessageDlg('Tipo não informado. Verifique!',mtInformation,[mbOK],0);
+    cbxTipo.SetFocus;
+    Abort;
+  end;
+
+  for contagem := 0 to cklCores.Count-1 do
+  begin
+   if cklCores.Checked[contagem] then
+    if(cores = '')then
+    begin
+     cores:=cklCores.Items[contagem];
+    end else
+      cores:=cores+','+cklCores.Items[contagem];
+  end;
+
+
   try
     veiculo:=TVeiculo.create(EdtModelo.Text,TEnum(cbxTipo.ItemIndex),
-    rdCambio.Items[rdCambio.ItemIndex],cklCores.Items[cklCores.ItemIndex]);
+    rdCambio.Items[rdCambio.ItemIndex],cores,mmLog);
   finally
     FreeAndNil(veiculo);
   end;
