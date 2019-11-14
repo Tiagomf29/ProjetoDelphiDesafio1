@@ -1,0 +1,12 @@
+unit UEnum;
+
+interface
+
+type
+
+  TEnum =(Carro , Moto , Caminhão );
+
+
+implementation
+
+end.

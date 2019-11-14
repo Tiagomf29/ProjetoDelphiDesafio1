@@ -1,79 +1,71 @@
 unit UTveiculo;
 
 interface
+
 uses
-  UEnum,Vcl.Controls,Vcl.Dialogs,Vcl.StdCtrls,TypInfo;
+  UEnum, Vcl.Controls, Vcl.Dialogs, Vcl.StdCtrls, TypInfo, SysUtils;
 
 type
 
-  TVeiculo = class
+  TVeiculo = class(TObject)
 
-private
-  Fmodelo : String;
-  Ftipo   : TEnum;
-  Fcambio : String;
-  Fcores  : String;
-  function getCambio: String;
-  function getCores: String;
-  function getModelo: String;
-  function getTipo: Tenum;
-  procedure setCambio(const Value: String);
-  procedure setModelo(const Value: String);
-  procedure setTipo(const Value: Tenum);
-  procedure setCores(const Value: String);
+  private
+    Fmodelo: String;
+    Ftipo: TEnum;
+    Fcambio: String;
+    Fcores: String;
+    function getCambio: String;
+    function getCores: String;
+    function getModelo: String;
+    function getTipo: TEnum;
+    function getTipoStr: string;
+    procedure setCambio(const Value: String);
+    procedure setModelo(const Value: String);
+    procedure setTipo(const Value: TEnum);
+    procedure setCores(const Value: String);
+  protected
 
-protected
-
-
-public
-  property modelo : String read getModelo write setModelo;
-  property tipo   : Tenum read getTipo write setTipo;
-  property cambio : String read getCambio write setCambio;
-  property cores  : String read getCores write setCores;
-  constructor create(Amodelo : String; Atipo : TEnum; Acambio : String; ACores :String; Amemo :TMemo );
-  function acelerar(descricao : String): String;
-  function frear(descricao:String):String;
-  procedure estacionar(memo : TMemo);
-end;
+  public
+    property modelo: String read getModelo write setModelo;
+    property tipo: TEnum read getTipo write setTipo;
+    property cambio: String read getCambio write setCambio;
+    property cores: String read getCores write setCores;
+    property TipoStr: string read getTipoStr;
+    constructor create(Amodelo: String; Atipo: TEnum; Acambio: String;
+      ACores: String);
+    function acelerar(): String;
+    function frear(): String;
+    procedure estacionar(memo: TMemo);
+    function ToString(): string; override;
+  end;
 
 implementation
 
 { TVeiculo }
 
-function TVeiculo.acelerar(descricao: String): String;
+function TVeiculo.acelerar(): String;
 begin
-  result:=descricao;
+  result := 'Acelerar';
 end;
 
-constructor TVeiculo.create(Amodelo : String; Atipo : TEnum; Acambio : String; ACores :String; Amemo :TMemo );
-var
-enumeracao : String;
+constructor TVeiculo.create(Amodelo: String; Atipo: TEnum; Acambio: String;
+  ACores: String);
 begin
-  Fmodelo:=Amodelo;
-  Ftipo:=Atipo;
-  Fcambio:=Acambio;
-  Fcores:=ACores;
+  Fmodelo := Amodelo;
+  Ftipo := Atipo;
+  Fcambio := Acambio;
+  Fcores := ACores;
 
   if Fmodelo = '' then
   begin
-   MessageDlg('Carro não será criado. Modelo não preenchido.',mtInformation,[mbOK],0);
-   Exit;
+    raise Exception.create('Carro não será criado. Modelo não preenchido.');
   end;
 
   if Fcambio = '' then
   begin
-   MessageDlg('Carro não será criado. Cambio não preenchido.',mtInformation,[mbOK],0);
-   Exit;
+    raise Exception.create('Carro não será criado. Cambio não preenchido.');
   end;
 
-  enumeracao:=GetEnumName(TypeInfo(TEnum),integer(Ftipo));
-
-  Amemo.Lines.Add('-----------------');
-  Amemo.Lines.Add('Modelo: '+ Fmodelo);
-  Amemo.Lines.Add('Tipo: '+ enumeracao);
-  Amemo.Lines.Add('Cambio: '+Fcambio);
-  Amemo.Lines.Add('Cores: '+ Fcores);
-  Amemo.Lines.Add('-----------------');
 end;
 
 procedure TVeiculo.estacionar(memo: TMemo);
@@ -81,49 +73,62 @@ begin
   memo.Lines.Add('Estacionar');
 end;
 
-function TVeiculo.frear(descricao: String): String;
+function TVeiculo.frear(): String;
 begin
-  Result:=descricao;
+  result := 'Frear';
 end;
 
 function TVeiculo.getCambio: String;
 begin
-  Result:= Fcambio;
+  result := Fcambio;
 end;
 
 function TVeiculo.getCores: String;
 begin
-  Result:= Fcores;
+  result := Fcores;
 end;
 
 function TVeiculo.getModelo: String;
 begin
-  Result:= Fmodelo;
+  result := Fmodelo;
 end;
 
-function TVeiculo.getTipo: Tenum;
+function TVeiculo.getTipo: TEnum;
 begin
-  Result:= Ftipo;
+  result := Ftipo;
+end;
+
+function TVeiculo.getTipoStr: string;
+begin
+  result := GetEnumName(TypeInfo(TEnum), integer(Ftipo));
 end;
 
 procedure TVeiculo.setCambio(const Value: String);
 begin
-  Fcambio:= Value;
+  Fcambio := Value;
 end;
 
 procedure TVeiculo.setCores(const Value: String);
 begin
-  Fcores:=Value;
+  Fcores := Value;
 end;
 
 procedure TVeiculo.setModelo(const Value: String);
 begin
-   Fmodelo:= Value;
+  Fmodelo := Value;
 end;
 
-procedure TVeiculo.setTipo(const Value: Tenum);
+procedure TVeiculo.setTipo(const Value: TEnum);
 begin
-  Ftipo:= Value;
+  Ftipo := Value;
+end;
+
+function TVeiculo.ToString: string;
+begin
+
+  result := result + ' Modelo: ' + Fmodelo + ' |Tipo: ' + TipoStr + ' |Cambio: '
+    + Fcambio + ' |Cores: ' + Fcores;
+
 end;
 
 end.

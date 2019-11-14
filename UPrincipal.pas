@@ -3,8 +3,10 @@ unit UPrincipal;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.CheckLst, Vcl.ExtCtrls,UEnum, UTVeiculo;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.CheckLst,
+  Vcl.ExtCtrls, UEnum, UTVeiculo;
 
 type
   TForm1 = class(TForm)
@@ -27,13 +29,14 @@ type
     procedure btCriarVeiculoClick(Sender: TObject);
   private
     { Private declarations }
+    veiculo: TVeiculo;
   public
     { Public declarations }
+    function cores(): string;
   end;
 
 var
   Form1: TForm1;
-  veiculo : TVeiculo;
 
 implementation
 
@@ -41,41 +44,26 @@ implementation
 
 procedure TForm1.btAcelerarClick(Sender: TObject);
 begin
-  mmLog.Lines.Add(veiculo.acelerar(btAcelerar.Caption));
+  mmLog.Lines.Add(veiculo.acelerar());
 end;
 
 procedure TForm1.btCriarVeiculoClick(Sender: TObject);
-var
-contagem : Integer;
-cores : String;
-
 begin
 
-  if cbxTipo.ItemIndex =-1 then
+  if cbxTipo.ItemIndex = -1 then
   begin
-    MessageDlg('Tipo não informado. Verifique!',mtInformation,[mbOK],0);
+    MessageDlg('Tipo não informado. Verifique!', mtInformation, [mbOK], 0);
     cbxTipo.SetFocus;
     Abort;
   end;
 
-  for contagem := 0 to cklCores.Count-1 do
-  begin
-   if cklCores.Checked[contagem] then
-    if(cores = '')then
-    begin
-     cores:=cklCores.Items[contagem];
-    end else
-      cores:=cores+','+cklCores.Items[contagem];
-  end;
-
-
-  try
-    veiculo:=TVeiculo.create(EdtModelo.Text,TEnum(cbxTipo.ItemIndex),
-    rdCambio.Items[rdCambio.ItemIndex],cores,mmLog);
-  finally
+  if Assigned(veiculo) then
     FreeAndNil(veiculo);
-  end;
 
+  veiculo := TVeiculo.create(EdtModelo.Text, TEnum(cbxTipo.ItemIndex),
+    rdCambio.Items[rdCambio.ItemIndex], cores());
+
+  mmLog.Lines.Add(veiculo.ToString());
 
 end;
 
@@ -86,21 +74,38 @@ end;
 
 procedure TForm1.btFrearClick(Sender: TObject);
 begin
-  mmLog.Lines.Add(veiculo.frear(btFrear.Caption));
+  mmLog.Lines.Add(veiculo.frear());
 end;
 
 procedure TForm1.cbxTipoClick(Sender: TObject);
-var
-enum : TEnum;
 begin
-  
-  if (cbxTipo.ItemIndex = 0) then
-  begin
-    rdCambio.Enabled:= true;
-  end else
-    rdCambio.Enabled:=False;
-    rdCambio.ItemIndex:=0;
+
+  rdCambio.Enabled := cbxTipo.ItemIndex = 0;
+
+  if not rdCambio.Enabled then
+    rdCambio.ItemIndex := 0;
 
 end;
 
-end.                                
+function TForm1.cores(): string;
+var
+  contagem: Integer;
+  cores: String;
+begin
+
+  cores := '';
+
+  for contagem := 0 to cklCores.Count - 1 do
+  begin
+    if cklCores.Checked[contagem] then
+      cores := cores + ',' + cklCores.Items[contagem];
+  end;
+
+  if cores <> '' then
+    Delete(cores, 1, 1);
+
+  Result := cores;
+
+end;
+
+end.

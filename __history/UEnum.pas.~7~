@@ -1,0 +1,11 @@
+﻿unit UEnum;
+
+interface
+
+type
+
+  TTipoVeiculo = (Carro , Moto , Caminhão );
+
+implementation
+
+end.
