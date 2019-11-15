@@ -27,16 +27,19 @@ type
     procedure btFrearClick(Sender: TObject);
     procedure btEstacionarClick(Sender: TObject);
     procedure btCriarVeiculoClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     veiculo: TVeiculo;
   public
     { Public declarations }
     function cores(): string;
+
   end;
 
 var
   Form1: TForm1;
+  veiculoCriado : Boolean;
 
 implementation
 
@@ -44,12 +47,24 @@ implementation
 
 procedure TForm1.btAcelerarClick(Sender: TObject);
 begin
-  mmLog.Lines.Add(veiculo.acelerar());
+
+  if veiculoCriado=true then
+  begin
+    mmLog.Lines.Add(veiculo.acelerar());
+  end else
+   MessageDlg('Veículo ainda não foi criado. Verifique!',mtInformation,[mbOK],0);
+
 end;
 
 procedure TForm1.btCriarVeiculoClick(Sender: TObject);
 begin
 
+  if EdtModelo.Text = '' then
+  begin
+    MessageDlg('Modelo não informado.Verifique!',mtInformation,[mbOK],0);
+    EdtModelo.SetFocus;
+    Abort;
+  end else
   if cbxTipo.ItemIndex = -1 then
   begin
     MessageDlg('Tipo não informado. Verifique!', mtInformation, [mbOK], 0);
@@ -62,19 +77,30 @@ begin
 
   veiculo := TVeiculo.create(EdtModelo.Text, TEnum(cbxTipo.ItemIndex),
     rdCambio.Items[rdCambio.ItemIndex], cores());
-
+  veiculoCriado:= true;
+  mmLog.Lines.Clear;
   mmLog.Lines.Add(veiculo.ToString());
 
 end;
 
 procedure TForm1.btEstacionarClick(Sender: TObject);
 begin
-  veiculo.estacionar(mmLog);
+
+  if veiculoCriado=true then
+  begin
+    veiculo.estacionar(mmLog);
+  end else
+   MessageDlg('Veículo ainda não foi criado. Verifique!',mtInformation,[mbOK],0);
+
 end;
 
 procedure TForm1.btFrearClick(Sender: TObject);
 begin
-  mmLog.Lines.Add(veiculo.frear());
+  if veiculoCriado=true then
+  begin
+    mmLog.Lines.Add(veiculo.frear());
+  end else
+   MessageDlg('Veículo ainda não foi criado. Verifique!',mtInformation,[mbOK],0);
 end;
 
 procedure TForm1.cbxTipoClick(Sender: TObject);
@@ -106,6 +132,11 @@ begin
 
   Result := cores;
 
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+begin
+  rdCambio.ItemIndex:=0;
 end;
 
 end.

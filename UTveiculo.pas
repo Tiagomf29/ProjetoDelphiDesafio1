@@ -126,8 +126,10 @@ end;
 function TVeiculo.ToString: string;
 begin
 
-  result := result + ' Modelo: ' + Fmodelo + ' |Tipo: ' + TipoStr + ' |Cambio: '
-    + Fcambio + ' |Cores: ' + Fcores;
+  result := 'Modelo: ' + Fmodelo +'  |  '+
+            'Tipo: ' + TipoStr +'  |  '+
+            'Câmbio: ' + Fcambio +'  |  '+
+            'Cores: ' + Fcores;
 
 end;
 

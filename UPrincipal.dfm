@@ -13,6 +13,7 @@ object Form1: TForm1
   Font.Style = []
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -69,8 +70,8 @@ object Form1: TForm1
       'Caminhao')
   end
   object btCriarVeiculo: TButton
-    Left = 15
-    Top = 96
+    Left = 17
+    Top = 98
     Width = 120
     Height = 40
     Caption = 'Criar ve'#237'culo'
