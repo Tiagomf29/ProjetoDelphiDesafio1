@@ -13,6 +13,7 @@ object Form1: TForm1
   Font.Style = []
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -141,5 +142,14 @@ object Form1: TForm1
     Lines.Strings = (
       '')
     TabOrder = 8
+  end
+  object Button1: TButton
+    Left = 8
+    Top = 296
+    Width = 271
+    Height = 25
+    Caption = 'Exibir todos ve'#237'culos criados'
+    TabOrder = 9
+    OnClick = Button1Click
   end
 end

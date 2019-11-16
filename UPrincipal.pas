@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.CheckLst,
-  Vcl.ExtCtrls, UEnum, UTVeiculo;
+  Vcl.ExtCtrls, UEnum, UTVeiculo,System.Generics.Collections;
 
 type
   TForm1 = class(TForm)
@@ -22,28 +22,39 @@ type
     cklCores: TCheckListBox;
     mmLog: TMemo;
     Label3: TLabel;
+    Button1: TButton;
     procedure cbxTipoClick(Sender: TObject);
     procedure btAcelerarClick(Sender: TObject);
     procedure btFrearClick(Sender: TObject);
     procedure btEstacionarClick(Sender: TObject);
     procedure btCriarVeiculoClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     veiculo: TVeiculo;
   public
     { Public declarations }
     function cores(): string;
-
+    function adcionarVeiculo(veiculo :TVeiculo):TObjectList<TVeiculo>;
   end;
 
 var
   Form1: TForm1;
   veiculoCriado : Boolean;
+  listaTmp : TObjectList<TVeiculo>;
 
 implementation
 
 {$R *.dfm}
+
+
+function TForm1.adcionarVeiculo(veiculo: TVeiculo): TObjectList<TVeiculo>;
+begin
+  listaTmp.Add(veiculo);
+  result:=listaTmp;
+end;
 
 procedure TForm1.btAcelerarClick(Sender: TObject);
 begin
@@ -80,7 +91,7 @@ begin
   veiculoCriado:= true;
   mmLog.Lines.Clear;
   mmLog.Lines.Add(veiculo.ToString());
-
+  adcionarVeiculo(veiculo);
 end;
 
 procedure TForm1.btEstacionarClick(Sender: TObject);
@@ -101,6 +112,11 @@ begin
     mmLog.Lines.Add(veiculo.frear());
   end else
    MessageDlg('Veículo ainda não foi criado. Verifique!',mtInformation,[mbOK],0);
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  veiculo.listaVeiculos(listaTmp,mmLog);
 end;
 
 procedure TForm1.cbxTipoClick(Sender: TObject);
@@ -132,6 +148,11 @@ begin
 
   Result := cores;
 
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  listaTmp:=TObjectList<TVeiculo>.Create();
 end;
 
 procedure TForm1.FormShow(Sender: TObject);

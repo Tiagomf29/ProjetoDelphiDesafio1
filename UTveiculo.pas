@@ -3,7 +3,8 @@ unit UTveiculo;
 interface
 
 uses
-  UEnum, Vcl.Controls, Vcl.Dialogs, Vcl.StdCtrls, TypInfo, SysUtils;
+  UEnum, Vcl.Controls, Vcl.Dialogs, Vcl.StdCtrls, TypInfo, SysUtils, System.Classes,
+  System.Generics.Collections;
 
 type
 
@@ -37,6 +38,8 @@ type
     function frear(): String;
     procedure estacionar(memo: TMemo);
     function ToString(): string; override;
+    class procedure listaVeiculos(lista : TObjectList<TVeiculo>; memo : TMemo);
+
   end;
 
 implementation
@@ -101,6 +104,23 @@ end;
 function TVeiculo.getTipoStr: string;
 begin
   result := GetEnumName(TypeInfo(TEnum), integer(Ftipo));
+end;
+
+class procedure TVeiculo.listaVeiculos(lista: TObjectList<TVeiculo>;
+  memo: TMemo);
+var
+i : Integer;
+begin
+
+  memo.Lines.Clear;
+  for i := 0 to lista.Count-1 do
+    begin
+      memo.Lines.Add('Modelo: '+lista.Items[i].getModelo);
+      memo.Lines.Add('Tipo: '+lista.Items[i].getTipoStr);
+      memo.Lines.Add('Câmbio: '+lista.Items[i].getCambio);
+      memo.Lines.Add('Cores: '+lista.Items[i].getCores);
+      memo.Lines.Add('--------------------');
+    end;
 end;
 
 procedure TVeiculo.setCambio(const Value: String);
