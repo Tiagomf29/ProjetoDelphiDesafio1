@@ -111,7 +111,6 @@ class procedure TVeiculo.listaVeiculos(lista: TObjectList<TVeiculo>;
 var
 i : Integer;
 begin
-
   memo.Lines.Clear;
   for i := 0 to lista.Count-1 do
     begin

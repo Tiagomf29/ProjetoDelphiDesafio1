@@ -37,7 +37,7 @@ type
   public
     { Public declarations }
     function cores(): string;
-    function adcionarVeiculo(veiculo :TVeiculo):TObjectList<TVeiculo>;
+    function adcionarVeiculo(veiculo2 :TVeiculo):TObjectList<TVeiculo>;
   end;
 
 var
@@ -50,9 +50,11 @@ implementation
 {$R *.dfm}
 
 
-function TForm1.adcionarVeiculo(veiculo: TVeiculo): TObjectList<TVeiculo>;
+function TForm1.adcionarVeiculo(veiculo2: TVeiculo): TObjectList<TVeiculo>;
+var
+I : Integer;
 begin
-  listaTmp.Add(veiculo);
+  listaTmp.Add(veiculo2);
   result:=listaTmp;
 end;
 
@@ -83,8 +85,8 @@ begin
     Abort;
   end;
 
-  if Assigned(veiculo) then
-    FreeAndNil(veiculo);
+ { if Assigned(veiculo) then
+    FreeAndNil(veiculo);}
 
   veiculo := TVeiculo.create(EdtModelo.Text, TEnum(cbxTipo.ItemIndex),
     rdCambio.Items[rdCambio.ItemIndex], cores());

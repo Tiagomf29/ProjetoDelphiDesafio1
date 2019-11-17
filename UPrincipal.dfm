@@ -147,7 +147,7 @@ object Form1: TForm1
     Left = 8
     Top = 296
     Width = 271
-    Height = 25
+    Height = 49
     Caption = 'Exibir todos ve'#237'culos criados'
     TabOrder = 9
     OnClick = Button1Click
