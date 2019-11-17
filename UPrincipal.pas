@@ -31,6 +31,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     veiculo: TVeiculo;
@@ -84,9 +85,6 @@ begin
     cbxTipo.SetFocus;
     Abort;
   end;
-
- if Assigned(veiculo) then
-    FreeAndNil(veiculo);
 
   veiculo := TVeiculo.create(EdtModelo.Text, TEnum(cbxTipo.ItemIndex),
     rdCambio.Items[rdCambio.ItemIndex], cores());
@@ -149,6 +147,13 @@ begin
     Delete(cores, 1, 1);
 
   Result := cores;
+
+end;
+
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   if Assigned(veiculo) then
+    FreeAndNil(veiculo);
 
 end;
 
