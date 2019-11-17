@@ -85,8 +85,8 @@ begin
     Abort;
   end;
 
- { if Assigned(veiculo) then
-    FreeAndNil(veiculo);}
+ if Assigned(veiculo) then
+    FreeAndNil(veiculo);
 
   veiculo := TVeiculo.create(EdtModelo.Text, TEnum(cbxTipo.ItemIndex),
     rdCambio.Items[rdCambio.ItemIndex], cores());

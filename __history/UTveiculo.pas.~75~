@@ -38,9 +38,7 @@ type
     function frear(): String;
     procedure estacionar(memo: TMemo);
     function ToString(): string; override;
-    procedure listaVeiculos (ListaVeiculos : TObjectList<TVeiculo>; memo : TMemo);
-
-
+    class procedure listaVeiculos(lista : TObjectList<TVeiculo>; memo : TMemo);
 
   end;
 
@@ -108,17 +106,20 @@ begin
   result := GetEnumName(TypeInfo(TEnum), integer(Ftipo));
 end;
 
-procedure TVeiculo.listaVeiculos(ListaVeiculos: TObjectList<TVeiculo>;
+class procedure TVeiculo.listaVeiculos(lista: TObjectList<TVeiculo>;
   memo: TMemo);
+var
+i : Integer;
 begin
-
-    memo.Lines.Clear;
-    memo.Lines.add('Modelo: '+ListaVeiculos.Items[0].getModelo);
-    memo.Lines.add('Tipo: '+ListaVeiculos.Items[0].getTipoStr);
-    memo.Lines.add('Câmbio: '+ListaVeiculos.Items[0].getCambio);
-    memo.Lines.add('Cores: '+ListaVeiculos.Items[0].getCores);
-    memo.Lines.add('------------------------------');
-
+  memo.Lines.Clear;
+  for i := 0 to lista.Count-1 do
+    begin
+      memo.Lines.Add('Modelo: '+lista.Items[i].getModelo);
+      memo.Lines.Add('Tipo: '+lista.Items[i].getTipoStr);
+      memo.Lines.Add('Câmbio: '+lista.Items[i].getCambio);
+      memo.Lines.Add('Cores: '+lista.Items[i].getCores);
+      memo.Lines.Add('--------------------');
+    end;
 end;
 
 procedure TVeiculo.setCambio(const Value: String);
@@ -144,9 +145,9 @@ end;
 function TVeiculo.ToString: string;
 begin
 
-  result := 'Modelo: ' + Fmodelo +'  |  '+
-            'Tipo: ' + TipoStr +'  |  '+
-            'Câmbio: ' + Fcambio +'  |  '+
+  result := 'Modelo: ' + Fmodelo +#13+
+            'Tipo: ' + TipoStr +#13+
+            'Câmbio: ' + Fcambio +#13+
             'Cores: ' + Fcores;
 
 end;

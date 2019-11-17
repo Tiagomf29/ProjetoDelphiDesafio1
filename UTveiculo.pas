@@ -145,9 +145,9 @@ end;
 function TVeiculo.ToString: string;
 begin
 
-  result := 'Modelo: ' + Fmodelo +'  |  '+
-            'Tipo: ' + TipoStr +'  |  '+
-            'Câmbio: ' + Fcambio +'  |  '+
+  result := 'Modelo: ' + Fmodelo +#13#10+
+            'Tipo: ' + TipoStr +#13#10+
+            'Câmbio: ' + Fcambio +#13#10+
             'Cores: ' + Fcores;
 
 end;
