@@ -99,7 +99,7 @@ begin
 
   if veiculoCriado=true then
   begin
-    veiculo.estacionar(mmLog);
+    mmLog.Lines.Add(veiculo.estacionar);
   end else
    MessageDlg('Veículo ainda não foi criado. Verifique!',mtInformation,[mbOK],0);
 
@@ -116,7 +116,8 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-  veiculo.listaVeiculos(listaTmp,mmLog);
+  mmLog.Lines.Clear;
+  mmLog.Lines.Add(veiculo.listaVeiculos(listaTmp));
 end;
 
 procedure TForm1.cbxTipoClick(Sender: TObject);

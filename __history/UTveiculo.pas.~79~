@@ -38,6 +38,7 @@ type
     function frear(): String;
     procedure estacionar(memo: TMemo);
     function ToString(): string; override;
+    class function listaVeiculos(lista : TObjectList<TVeiculo>): String;
 
   end;
 
@@ -105,9 +106,23 @@ begin
   result := GetEnumName(TypeInfo(TEnum), integer(Ftipo));
 end;
 
+class function TVeiculo.listaVeiculos(lista: TObjectList<TVeiculo>): String;
+var
+i : Integer;
+texto : String;
+begin
 
+  for i := 0 to lista.Count-1 do
+    begin
+      texto:= texto + 'Modelo: '+lista.Items[i].getModelo + #13#10 +
+                      'Tipo: '+lista.Items[i].getTipoStr + #13#10 +
+                      'Câmbio: '+lista.Items[i].getCambio + #13#10 +
+                      'Cores: '+lista.Items[i].getCores + #13#10 +
+                      '--------------------'+ #13#10;
+    end;
 
-
+    Result:= texto;
+end;
 
 procedure TVeiculo.setCambio(const Value: String);
 begin
@@ -132,9 +147,9 @@ end;
 function TVeiculo.ToString: string;
 begin
 
-  result := 'Modelo: ' + Fmodelo +'  |  '+
-            'Tipo: ' + TipoStr +'  |  '+
-            'Câmbio: ' + Fcambio +'  |  '+
+  result := 'Modelo: ' + Fmodelo +#13#10+
+            'Tipo: ' + TipoStr +#13#10+
+            'Câmbio: ' + Fcambio +#13#10+
             'Cores: ' + Fcores;
 
 end;

@@ -31,31 +31,31 @@ type
     procedure FormShow(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     veiculo: TVeiculo;
-    listaTemporaria: TObjectList<TVeiculo>;
   public
     { Public declarations }
     function cores(): string;
-    function adcionarVeiculo(veiculo :TVeiculo):TObjectList<TVeiculo>;
-    property listaTmp : TObjectList<TVeiculo>  read listaTemporaria write listaTemporaria;
-
+    function adcionarVeiculo(veiculo2 :TVeiculo):TObjectList<TVeiculo>;
   end;
 
 var
   Form1: TForm1;
   veiculoCriado : Boolean;
-
+  listaTmp : TObjectList<TVeiculo>;
 
 implementation
 
 {$R *.dfm}
 
 
-function TForm1.adcionarVeiculo(veiculo: TVeiculo): TObjectList<TVeiculo>;
+function TForm1.adcionarVeiculo(veiculo2: TVeiculo): TObjectList<TVeiculo>;
+var
+I : Integer;
 begin
-  listaTmp.Add(veiculo);
+  listaTmp.Add(veiculo2);
   result:=listaTmp;
 end;
 
@@ -85,9 +85,6 @@ begin
     cbxTipo.SetFocus;
     Abort;
   end;
-
-  if Assigned(veiculo) then
-    FreeAndNil(veiculo);
 
   veiculo := TVeiculo.create(EdtModelo.Text, TEnum(cbxTipo.ItemIndex),
     rdCambio.Items[rdCambio.ItemIndex], cores());
@@ -119,7 +116,8 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-  veiculo.listaVeiculos(listaTmp,mmLog);
+  mmLog.Lines.Clear;
+  mmLog.Lines.Add(veiculo.listaVeiculos(listaTmp));
 end;
 
 procedure TForm1.cbxTipoClick(Sender: TObject);
@@ -150,6 +148,13 @@ begin
     Delete(cores, 1, 1);
 
   Result := cores;
+
+end;
+
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   if Assigned(veiculo) then
+    FreeAndNil(veiculo);
 
 end;
 
